@@ -1,0 +1,175 @@
+﻿@model CoolTaskManagement.DAL.Task
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+@{
+    CoolTaskManagement.DAL.User User = (CoolTaskManagement.DAL.User)Session["UserData"];
+    }
+
+<body class="skin-black">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <section class="panel">
+            <header class="panel-heading">
+                Edit Task
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal tasi-form">
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.JobDescTypeID, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.JobDescTypeID, @ViewBag.JobDescriptions as SelectList, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.JobDescTypeID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.AssignDate, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.AssignDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "true" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.StartingDate, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.StartingDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "true" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.FinishingDate, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.FinishingDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "true" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.TaskDescription, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.TaskDescription, new { @class = "form-control", @rows = "3", @enabled = "true" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.TaskResultNotes, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.TaskResultNotes, new { @class = "form-control", @rows = "3" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.TaskEvaluationNotes, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.TaskEvaluationNotes, new { @class = "form-control", @rows = "3", @enabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Status, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.Status, @ViewBag.ProgressStatus as List<SelectListItem>, "---  Task Progress Status ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                        </div>
+                       
+                 
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.Progress , new { @class = "control-label" })
+                        </div>
+                      
+                        <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.Progress, new { @class = "form-control"}) 
+                                @Html.ValidationMessageFor(model => model.Progress, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.QualityResult, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.QualityResult, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ApprovedStatus, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.ApprovedStatus, @ViewBag.ApprovedStatus as List<SelectListItem>, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.ApprovedBy, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ApprovedBy, new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-4">
+                            <button class="btn btn-primary btn-addon btn-sm " type="submit" value="Edit">
+                                <i class="fa fa-pencil"></i>
+                                Update
+                            </button>
+                        </div>
+
+                        <div>
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-4">
+                            @Html.ActionLink("Back To Dashboard", "Index")
+                        </div>
+
+                        <div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    }
+
+    
+
+
+</body>
+

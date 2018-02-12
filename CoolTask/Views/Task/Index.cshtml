@@ -1,0 +1,270 @@
+﻿@model CoolTaskManagement.DAL.Task
+@using CoolTaskManagement.Helpers
+@{
+    ViewBag.Title = "Task Dashboard";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+
+@{
+
+   CoolTaskManagement.DAL.User User = (CoolTaskManagement.DAL.User)Session["UserData"];
+   List<CoolTaskManagement.Models.TaskViewModel> userTask = ViewBag.Tasks as List<CoolTaskManagement.Models.TaskViewModel>;
+   List<CoolTaskManagement.Models.TaskSeriesModel> graphTask = (List<CoolTaskManagement.Models.TaskSeriesModel>)ViewBag.Graph;
+
+   List<SelectListItem> ProgressStatus = (List<SelectListItem>)ViewBag.ProgressStatus ;
+   List<SelectListItem> ApprovedStatus = (List<SelectListItem>)ViewBag.ApprovedStatus;
+    }
+
+
+    <body class="skin-blue">
+
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <!-- Main content -->
+                <div class="row">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h4 class="text-center">Latest Tasks</h4>
+                        </div>
+                        <div class="panel-body table-responsive">
+
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table id="table-task" class="table table-oddEven-rows table-hover table-striped table-fixed-row-heights dt-responsive " cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                            <tr>
+
+                                                <th id="No" class="col-xs-1">#</th>
+
+                                                <th class="col-lg-1">Date</th>
+                                                <th class="col-lg-1">Status</th>
+                                                <th class="col-lg-1">Progress</th>
+                                                <th class="col-lg-3">Job Descriptions</th>
+                                                <th class="col-lg-3">Task Description</th>
+                                                <th class="col-xs-1"></th>
+                                                <th class="hidden">Task ID</th>
+
+
+                                            </tr>
+
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+
+                                                <th>#</th>
+                                                <th class="col-lg-1">Date</th>
+                                                <th class="col-lg-1">Status</th>
+                                                <th class="col-lg-1">Progress</th>
+                                                <th class="col-lg-3">Job Descriptions</th>
+                                                <th class="col-lg-3">Task Description</th>
+                                                <th></th>
+                                                <th class="hidden">Task ID</th>
+
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @{ int No = 0; int Jum =userTask.Count().ToString().Length;}
+
+                                            @foreach (var item in userTask)
+                                            {
+                                                No++;
+                                            <tr>
+
+
+                                                <td>@No.ToString("D"+@Jum)</td>
+
+                                                <td>@item.AssignDate.ToShortDateString()</td>
+                                                @switch (@item.Status)
+                                                    {
+                                                        case 1:
+                                                <td><span class="label label-info">New </span></td>
+                                                            break;
+                                                        case 2:
+                                                <td><span class="label label-danger">On Working</span></td>
+                                                            break;
+                                                        case 3:
+                                                <td><span class="label label-success">Complete</span></td>
+                                                            break;
+                                                        case 4:
+                                                <td><span class="label label-default">Cancel</span></td>
+                                                            break;
+                                                        default:
+                                                <td><span class="label label-inverse"> </span></td>
+                                                            break;
+                                                    }
+                                                <td><span class="badge badge-info">@item.Progress %</span></td>
+                                                <td>@item.TypeID</td>
+                                                <td>@item.TaskDescription</td>
+                                                <td class="col-md-2">
+                                                    @Html.NoEncodeActionLink("<span class='fa fa-eye'></span>", "Details", "Detail", "Task", routeValues: new { id = item.TaskID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                                                    &nbsp;
+                                                    @if (@item.Status == 3)
+                                                        {
+                                                    <button class="btn btn-default" disabled><span class='fa fa-pencil'></span></button>
+
+                                                        }
+                                                        else
+                                                        {
+                                                    @Html.NoEncodeActionLink("<span class='fa fa-pencil'></span>", "Edit", "Edit", "Task", routeValues: new { id = item.TaskID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default " })
+
+                                                        }
+                                                    &nbsp;
+                                                    @Html.NoEncodeActionLink("<span class='fa fa-times'></span>", "Delete", "Delete", "Task", routeValues: new { id = item.TaskID }, htmlAttributes: new { data_modal = "", @class = "btn btn-default " })
+
+                                                </td>
+                                                <td class="hidden">@item.TaskID</td>
+
+
+                                            </tr>
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!--Latest Task End-->
+                </div>
+                <div class="row">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h4 class="text-center">Filter</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <section class="panel">
+                                    <div class="panel-body table-responsive">
+                                        <div class="row">
+                                            <div class="col-xs-1"></div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="control-label"> Assign Date:</label>
+                                                    <hr />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-lg-5">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Staring Date</label>
+                                                                <div class="input-group date">
+                                                                    <input type="text" class="form-control" placeholder="Staring Date..." id="start-date"><span class="input-group-addon"><i class="icon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 ">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Finishing Date</label>
+                                                                <div class="input-group date">
+                                                                    <input type="text" class="form-control" placeholder="Finishing Date..." id="end-date"><span class="input-group-addon"><i class="icon-calendar"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1"></div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="control-label">Task Status :</label>
+                                                    <hr />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="radio">
+                                                                <input class="customRadioButton" id="all" type="radio" name="searchRadio" value="" checked>
+                                                                <label for="all">All</label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <input class="customRadioButton" id="new" type="radio" name="searchRadio" value="New">
+                                                                <label for="new">New</label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <input class="customRadioButton" id="onworking" type="radio" name="searchRadio" value="On Working">
+                                                                <label for="onworking">On Working</label>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="radio">
+                                                                <input class="customRadioButton" id="complete" type="radio" name="searchRadio" value="Complete">
+                                                                <label for="complete">Complete</label>
+                                                            </div>
+                                                            <div class="radio">
+                                                                <input class="customRadioButton" id="cancel" type="radio" name="searchRadio" value="Cancel">
+                                                                <label for="cancel">Cancel</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </section>
+                                <!--Latest Task End-->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+           
+
+
+        </div><!-- ./wrapper -->
+        <!-- modal placeholder-->
+        <div id='myModal' class='modal fade in'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+        </div>
+
+       <script type="text/javascript">
+            $(document).ready(function () {
+                $("btn-view").click(function () {
+                    var id = this.id.split("_")[0];
+                    location.href = '@Url.Action("Detail", new RouteValueDictionary() { { "Controller", "Task" } } )?taskID=' + id;
+                });
+                $("btn-edit").click(function () {
+                    var id = this.id.split("_")[0];
+                    location.href = '@Url.Action("Edit", new RouteValueDictionary() { { "Controller", "Task" } } )?taskID=' + id;
+                });
+            });
+        </script>
+
+        <!-- Director for demo purposes -->
+        <script type="text/javascript">
+            $('input').on('ifChecked', function (event) {
+                // var element = $(this).parent().find('input:checkbox:first');
+                // element.parent().parent().parent().addClass('highlight');
+                $(this).parents('li').addClass("task-done");
+                console.log('ok');
+            });
+            $('input').on('ifUnchecked', function (event) {
+                // var element = $(this).parent().find('input:checkbox:first');
+                // element.parent().parent().parent().removeClass('highlight');
+                $(this).parents('li').removeClass("task-done");
+                console.log('not');
+            });
+
+        </script>
+        <script>
+            $('#noti-box').slimScroll({
+                height: '400px',
+                size: '5px',
+                BorderRadius: '5px'
+            });
+
+            $('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+                checkboxClass: 'icheckbox_flat-grey',
+                radioClass: 'iradio_flat-grey'
+            });
+        </script>
+        
+    </body>
+
+

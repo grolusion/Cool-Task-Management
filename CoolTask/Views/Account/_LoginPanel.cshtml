@@ -1,0 +1,47 @@
+﻿@model CoolTaskManagement.Models.LoginViewModel
+<div class="top-content">
+    <div class="container">
+
+        @if (!string.IsNullOrWhiteSpace(ViewBag.LoginMessage))
+        {
+    <p class="text-success">@ViewBag.LoginMessage</p>
+        }
+        @using (Html.BeginForm())
+        {
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-6 col-sm-offset-3 r-form-1-box wow fadeInUp">
+            <div class="r-form-1-top">
+                <div class="r-form-1-top-left">
+                    <h3>Login</h3>
+                    <hr />
+                </div>
+                <div class="r-form-1-top-right">
+                    <i class="fa fa-key"></i><hr />
+                </div>
+
+                @Html.ValidationSummary(true)
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmployeeNo, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.EmployeeNo, new { @class = "form-control", id = "form-EmployeeNo", @placeholder = "Isikan EmployeeNo", @autofocus = true })
+                    @Html.ValidationMessageFor(model => model.EmployeeNo)
+
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+                    @Html.PasswordFor(model => model.Password, new { @class = "form-control",id = "form-password", @placeholder = "Isikan Password..." })
+                    @Html.ValidationMessageFor(model => model.Password)
+                </div>
+
+
+                <input type="submit" value="Login" class="btn btn-success col-md-12 " />
+
+            </div>
+        </div>
+
+    </div>
+
+        }
+    </div>
+</div>

@@ -1,0 +1,267 @@
+﻿@{
+    CoolTaskManagement.DAL.User User = (CoolTaskManagement.DAL.User)Session["UserData"] ;
+    int TaskID = Convert.ToInt32(Session["TaskID"]);
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>User | Dashboard</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <meta name="description" content="">
+    <meta name="keywords" content="g">
+    <!-- bootstrap 3.0.2 -->
+    <link href="~/Content/dashboard/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <!-- font Awesome -->
+    <link href="~/Content/dashboard/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="~/Content/dashboard/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+    <!-- Morris chart -->
+    <link href="~/Content/dashboard/css/morris/morris.css" rel="stylesheet" type="text/css" />
+    <!-- jvectormap -->
+    <link href="~/Content/dashboard/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+    <!-- Date Picker -->
+    <link href="~/Content/dashboard/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+    <!-- fullCalendar -->
+    <!-- <link href="~/Content/dashboard/css/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" /> -->
+    <!-- Daterange picker -->
+    <link href="~/Content/dashboard/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+    <!-- iCheck for checkboxes and radio inputs -->
+    <link href="~/Content/dashboard/css/iCheck/all.css" rel="stylesheet" type="text/css" />
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!-- <link href="css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" /> -->
+    <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <!-- Theme style -->
+    <link href="~/Content/dashboard/css/style.css" rel="stylesheet" type="text/css" />
+
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+      <![endif]-->
+
+    
+    <link href="~/Content/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.searchHighlight.css" rel="stylesheet" />
+
+</head>
+
+<body class="skin-black">
+ <!-- header logo: style can be found in header.less -->
+    <header class="header">
+        <a href=@Url.Action("Graph", "Task") class="logo">
+            <div class="pull-left image">
+                <img src="~/Content/dashboard/img/logo.png" class="img-circle" alt="CoolTask System" />
+            </div>
+            <div>CoolTask</div>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top" role="navigation">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
+                   
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i>
+                            <span>@User.Name <i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-custom dropdown-menu-right">
+                            <li class="dropdown-header text-center">Account</li>
+                                    <li><a href=@Url.Action("LogOut", "Account")>
+                                    <i class="fa fa-sign-out fa-fw pull-right"></i> <span>Sign Out</span></a>
+                           </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <div class="wrapper row-offcanvas row-offcanvas-left">
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="left-side sidebar-offcanvas">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+               
+               
+                <!-- /.search form -->
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu">
+                    <li class="active">
+                        <a href=@Url.Action("Graph","Task")>
+                            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href=@Url.Action("Index","Company")>
+                            <i class="fa fa-bars" aria-hidden="true"></i> <span>Company List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href=@Url.Action("Index","User")>
+                            <i class="fa fa-bars" aria-hidden="true"></i> <span>Employee List</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href=@Url.Action("Index","Task")> 
+                            <i class="fa fa-bar-chart-o"></i> <span>Task</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href=@Url.Action("Create","Task")>
+                            <i class="fa fa-plus-circle"></i> <span>Create Task</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href=@Url.Action("Create", "Task")>
+                            <i class="fa fa-tasks"></i> <span>Update Task</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href=@Url.Action("LogOut", "Account")>
+                            <i class="fa fa-sign-out"></i> <span>Sign Out</span>
+                        </a>
+                    </li>
+
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+  
+        <aside class="right-side">
+
+            <!-- Main content -->
+            <section class="content">
+
+
+                @RenderBody()
+
+
+            </section>
+    <!-- /.content -->
+            <div class="footer-main">
+                &copy; 2018 - <a href="#">LogisFleet</a>
+            </div>
+        </aside><!-- /.right-side -->
+
+    </div><!-- ./wrapper -->
+
+    <script src="~/Scripts/jquery.min.js" type="text/javascript"></script>
+    <!-- jQuery UI 1.10.3 -->
+    <script src="~/Scripts/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+    <!-- Bootstrap -->
+    <script src="~/Scripts/bootstrap.min.js" type="text/javascript"></script>
+    <!-- daterangepicker -->
+    <script src="~/Scripts/dashboard/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+
+    <script src="~/Scripts/dashboard/js/plugins/chart.js" type="text/javascript"></script>
+
+    <!-- datepicker
+    <script src="js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>-->
+    <!-- Bootstrap WYSIHTML5
+    <script src="~/Scripts/dashboard/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>-->
+    <!-- iCheck -->
+    <script src="~/Scripts/dashboard/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+    <!-- calendar -->
+    <script src="~/Scripts/dashboard/js/plugins/fullcalendar/fullcalendar.js" type="text/javascript"></script>
+
+    <!-- Director App -->
+    <script src="~/Scripts/dashboard/js/Director/app.js" type="text/javascript"></script>
+
+    <!-- Director dashboard demo (This is only for demo purposes) -->
+    <script src="~/Scripts/dashboard/js/Director/dashboard.js" type="text/javascript"></script>
+
+
+
+    <script src="~/Scripts/jquery-1.12.0.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/jquery.highlight.min.js"></script>
+    <script src="~/Scripts/dataTables.responsive.min.js"></script>
+    <script src="~/Scripts/dataTables.searchHighlight.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/fnMultiFilter.js"></script>
+    <script src="~/Scripts/customDataTable.js"></script>
+
+    <!-- Director for demo purposes -->
+    <script type="text/javascript">
+        $('input').on('ifChecked', function (event) {
+            // var element = $(this).parent().find('input:checkbox:first');
+            // element.parent().parent().parent().addClass('highlight');
+            $(this).parents('li').addClass("task-done");
+            console.log('ok');
+        });
+        $('input').on('ifUnchecked', function (event) {
+            // var element = $(this).parent().find('input:checkbox:first');
+            // element.parent().parent().parent().removeClass('highlight');
+            $(this).parents('li').removeClass("task-done");
+            console.log('not');
+        });
+
+    </script>
+    <script>
+        $('#noti-box').slimScroll({
+            height: '400px',
+            size: '5px',
+            BorderRadius: '5px'
+        });
+
+        $('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+            checkboxClass: 'icheckbox_flat-grey',
+            radioClass: 'iradio_flat-grey'
+        });
+    </script>
+       
+    <script>
+    $(document).ready(function () {
+        $('#CountryId').change(function () {
+
+            var countryID = $(this).val();
+            var $state = $('#StateID');
+            $state.empty();
+            $state.append($('<option></option>').val('').html('Please Wait...'));
+
+            if (countryID == "") {
+                $state.empty();
+                $state.append($('<option></option>').val('').html('Select State'));
+                return;
+            }
+
+            $.ajax({
+                url: '/Account/GetAllStateUser',
+                type: 'GET',
+                data: { 'countryID': countryID },
+                dataType: 'json',
+                success: function (d) {
+                    $state.empty();
+                    $state.append($('<option></option>').val('').html('--- Select State ---'));
+                    $.each(d, function (i, val) {
+                        $state.append($('<option></option>').val(val.StateID).html(val.StateName));
+                    });
+                },
+                error: function () {
+                    alert('Error');
+                }
+            });
+        });
+    });
+    </script>
+
+</body>
+
+</html>
+

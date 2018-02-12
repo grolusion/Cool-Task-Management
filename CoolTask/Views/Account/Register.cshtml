@@ -1,0 +1,168 @@
+﻿@model CoolTaskManagement.DAL.User
+@{
+    ViewBag.Title = "CoolTask System";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@*@using Recaptcha.Web
+    @using Recaptcha.Web.Mvc*@
+
+<div class="testimonials-container section-container section-container-image-bg">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3 r-form-1-box wow fadeInUp">
+                <div class="r-form-1-top">
+                    <div class="r-form-1-top-left">
+                        <h3>Register</h3>
+                     </div>
+                    <div class="r-form-1-top-right">
+                        <i class="fa fa-pencil"></i>
+                    </div>
+                </div>
+                <div class="r-form-1-bottom">
+                    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { role = "form" }))
+                    {
+                        @Html.ValidationSummary(true)
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            @if (Model != null)
+                            {
+                                @Html.HiddenFor(a => a.UserId)
+                            }
+
+                            @Html.LabelFor(a => a.Name)
+                            @Html.TextBoxFor(a => a.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Name)
+                        </div>
+
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.EmployeeNo)
+                            @Html.TextBoxFor(a => a.EmployeeNo, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.EmployeeNo)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.JobPositionId)
+                            @Html.DropDownListFor(a => a.JobPositionId, @ViewBag.JobPositions as SelectList, "--- Select Job Position ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.JobPositionId)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.CompanyID)
+                            @Html.DropDownListFor(a => a.CompanyID, @ViewBag.Companies as SelectList, "--- Select Company ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.CompanyID)
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.Address)
+                            @Html.TextBoxFor(a => a.Address, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Address)
+                        </div>
+                            <div class="form-group">
+       
+                                @Html.TextBoxFor(a => a.City, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.City)
+                            </div>
+                          <div class="form-group">
+                            @Html.LabelFor(a => a.CountryId)
+                            @Html.DropDownListFor(a => a.CountryId, ViewBag.Countries as SelectList, "--- Select Country ---", new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.StateID)
+                            @Html.DropDownListFor(a => a.StateID, ViewBag.States as SelectList, "--- Select State ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.StateID)
+                        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(a => a.ZipCode)
+                                @Html.TextBoxFor(a => a.ZipCode, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.ZipCode)
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(a => a.TelephoneNo)
+                                @Html.TextBoxFor(a => a.TelephoneNo, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.TelephoneNo)
+                            </div>
+
+
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.Email)
+                            @Html.TextBoxFor(a => a.Email, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Email)
+                        </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.DOB)
+        @Html.TextBoxFor(a => a.DOB, new { @class = "form-control" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+        @Html.ValidationMessageFor(a => a.DOB)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Salary)
+        @Html.TextBoxFor(a => a.Salary, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.Salary)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.ZipCode)
+        @Html.TextBoxFor(a => a.ZipCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.ZipCode)
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.TelephoneNo)
+        @Html.TextBoxFor(a => a.TelephoneNo, new { @class = "form-control" })
+        @Html.ValidationMessageFor(a => a.TelephoneNo)
+    </div>
+                        <div class="form-group">
+                            @Html.LabelFor(a => a.Password)
+                            @Html.PasswordFor(a => a.Password, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(a => a.Password)
+                        </div>
+                            <div class="form-group">
+                                @Html.LabelFor(a => a.Password2) 
+                                @Html.PasswordFor(a => a.Password2, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(a => a.Password2)
+                            </div>
+
+                        <button type="submit" class="btn btn-default">Register</button>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+            @section Scripts{
+                @Scripts.Render("~/bundles/jqueryval")
+                <script>
+                    $(document).ready(function () {
+                        $('#CountryId').change(function () {
+
+                            var countryID = $(this).val();
+                            var $state = $('#StateID');
+                            $state.empty();
+                            $state.append($('<option></option>').val('').html('Please Wait...'));
+
+                            if (countryID == "") {
+                                $state.empty();
+                                $state.append($('<option></option>').val('').html('Select State'));
+                                return;
+                            }
+
+                            $.ajax({
+                                url: '/Account/GetAllStateUser',
+                                type: 'GET',
+                                data: { 'countryID': countryID },
+                                dataType: 'json',
+                                success: function (d) {
+                                    $state.empty();
+                                    $state.append($('<option></option>').val('').html('--- Select State ---'));
+                                    $.each(d, function (i, val) {
+                                        $state.append($('<option></option>').val(val.StateID).html(val.StateName));
+                                    });
+                                },
+                                error: function () {
+                                    alert('Error');
+                                }
+                            });
+                        });
+                    });
+                </script>
+            }

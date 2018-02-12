@@ -1,0 +1,117 @@
+﻿@model CoolTaskManagement.DAL.Task
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+@{
+   CoolTaskManagement.DAL.User User = (CoolTaskManagement.DAL.User)Session["UserData"];
+    List<CoolTaskManagement.Models.TaskViewModel> userTask = ViewBag.Tasks as List<CoolTaskManagement.Models.TaskViewModel>;
+}
+
+<body class="skin-black">
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <section class="panel">
+            <header class="panel-heading">
+                Create Task
+            </header>
+            <div class="panel-body">
+                <div class="form-horizontal tasi-form" >
+
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.JobDescTypeID, htmlAttributes: new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(model => model.JobDescTypeID, @ViewBag.JobDescriptions as SelectList, "--- Select Job Category ---", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.JobDescTypeID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.AssignDate,new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.AssignDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "true" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.AssignDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.StartingDate,  new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.StartingDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "true" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.StartingDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.FinishingDate,  new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                @Html.TextBoxFor(model => model.FinishingDate, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "true" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                            </div>
+                            @Html.ValidationMessageFor(model => model.FinishingDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.TaskDescription, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.TaskDescription,  new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.TaskDescription, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-3">
+                            @Html.LabelFor(model => model.TaskResultNotes, new { @class = "control-label" })
+                        </div>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(model => model.TaskResultNotes, new { @class = "form-control", @rows = "3" })
+                            @Html.ValidationMessageFor(model => model.TaskResultNotes, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-3 col-md-4">
+                            <button class="btn btn-primary btn-addon btn-sm " type="submit" value="Create">
+                                <i class="fa fa-plus"></i>
+                                Add New Task
+                            </button>
+                        </div>
+                        
+                        <div>
+                            
+                        </div>
+                    </div>
+
+                    <div>
+                        @Html.ActionLink("Back To Dashboard", "Index")
+                    </div>
+</div>
+</div>
+        </section>
+    }
+
+               
+
+          
+    </body>

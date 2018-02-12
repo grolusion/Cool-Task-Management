@@ -1,0 +1,165 @@
+﻿@model CoolTaskManagement.DAL.User
+
+@{
+    ViewBag.Title = "Employee Details";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+@{
+    CoolTaskManagement.DAL.User User = (CoolTaskManagement.DAL.User)Session["UserData"];
+    CoolTaskManagement.Models.UserLoginModel userRecord = (CoolTaskManagement.Models.UserLoginModel)ViewBag.Users;
+       }
+
+        <body class="skin-black">
+
+            @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+    <section class="panel">
+        <header class="panel-heading">
+            Employee Details
+        </header>
+        <div class="panel-body">
+            <div class="form-horizontal tasi-form">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.EmployeeNo, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.EmployeeNo, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Address, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.City, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.City, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+              
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.StateID, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.StateID, @ViewBag.States as SelectList, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.CountryId, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.CountryId, @ViewBag.Countries as SelectList, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Email, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.JobPositionId, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.JobPositionId, @ViewBag.JobPositions as SelectList, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.CompanyID, htmlAttributes: new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(model => model.CompanyID, @ViewBag.Companies as SelectList, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+              
+               
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.DOB, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-4">
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.DOB, "{0:dd-MM-yyyy}", new { @class = "form-control", @enabled = "false" })<span class="input-group-addon"><i class="fa fa-calendar-o"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+             
+
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.LabelFor(model => model.Salary, new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.Salary, new { @class = "form-control", @enabled = "false" })
+                    </div>
+                </div>
+
+                
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.Label("Status", new { @class = "control-label" })
+                    </div>
+                    <div class="col-md-8">
+                        <span>
+                            @switch (@Model.IsActive)
+                         {
+                             case true:
+                            @Html.Label("Active", new { @class = "label label-info" })
+                                 break;
+                             case false:
+                            @Html.Label("Not Active", new { @class = "label label-danger" })
+                                 break;
+                             default:
+                            @Html.Label("No Status", new { @class = "label label-default" })
+                                 break;
+                         }
+                        </span>
+                    </div>
+                </div>
+              
+
+                <div class="form-group">
+                    <div class="col-md-offset-3 col-md-4">
+                        @Html.ActionLink("Back To Dashboard", "Index")
+                    </div>
+
+                    <div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    }
+
+
+
+
+        </body>

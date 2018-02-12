@@ -1,0 +1,129 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - LogisFleet</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:400,700">
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/landing/css/animate.css">
+    <link rel="stylesheet" href="~/Content/landing/css/style.css">
+    <link rel="stylesheet" href="~/Content/landing/css/media-queries.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="~/Content/landing/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/landing/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/landing/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/landing/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/Content/landing/ico/apple-touch-icon-57-precomposed.png">
+
+  
+   
+</head>
+<body>
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Action("Index", "Account")">CoolTask System - LogisFleet</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="top-navbar-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="scroll-link" href="#profile">Profile</a></li>
+                     <li><a  href="@Url.Action("Register", "Account")">Register</a></li>
+                    <li><a class="scroll-link" href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="top-content">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 text">
+                    <h1 class="wow fadeInLeftBig">CoolTask System - LogisFleet</h1>
+                    <div class="description wow fadeInLeftBig">
+                      </div>
+                </div>
+            </div>
+            <div class="row">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-4 footer-about wow fadeInUp">
+                    <h3>About Us</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
+                        Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.
+                    </p>
+                    <p>
+                        <a class="scroll-link" href="#about-us">Learn More</a>
+                    </p>
+                </div>
+                <div class="col-sm-4 footer-contact-info wow fadeInDown">
+                    <h3>Contact Info</h3>
+                    <p><i class="fa fa-map-marker"></i> Via Rossini 10, 10136 Turin Italy</p>
+                    <p><i class="fa fa-phone"></i> Phone: (0039) 333 12 68 347</p>
+                    <p><i class="fa fa-envelope"></i> Email: <a href="#">grolusion@yahoo.com</a></p>
+                </div>
+                <div class="col-sm-4 footer-social wow fadeInUp">
+                    <h3>We're Social</h3>
+                    <p>
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-google-plus"></i></a>
+                        <a href="#"><i class="fa fa-instagram"></i></a>
+                        <a href="#"><i class="fa fa-pinterest"></i></a>
+                    </p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6 footer-copyright">
+                    &copy; 2018 - <a href="#">LogisFleet</a>
+                </div>
+                <div class="col-sm-6 footer-menu">
+                    <ul>
+                        <li><a class="scroll-link" href="#top-content">Top</a></li>
+                        <li><a href="#">Terms</a></li>
+                        <li><a href="#">Privacy</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+            @Scripts.Render("~/bundles/jquery")
+            @RenderSection("scripts", required: false)
+
+
+    <!-- Javascript -->
+    <script src="~/Scripts/jquery-1.11.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.backstretch.min.js"></script>
+    <script src="~/Scripts/wow.min.js"></script>
+    <script src="~/Scripts/retina-1.1.0.min.js"></script>
+    <script src="~/Scripts/registerscripts.js"></script>
+
+    <!--[if lt IE 10]>
+        <script src="assets/js/placeholder.js"></script>
+    <![endif]-->
+
+</body>
+</html>
+

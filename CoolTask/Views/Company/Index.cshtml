@@ -1,0 +1,229 @@
+﻿@model CoolTaskManagement.DAL.Company
+@using CoolTaskManagement.Helpers
+@{
+    ViewBag.Title = "Companies Dashboard";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+
+@{
+
+   CoolTaskManagement.DAL.User User = (CoolTaskManagement.DAL.User)Session["UserData"];
+   List<CoolTaskManagement.DAL.Company> listRecords = ViewBag.ListRecords as List<CoolTaskManagement.DAL.Company>;
+
+    }
+
+
+    <body class="skin-blue">
+
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <!-- Main content -->
+                <div class="row">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h4 class="text-center">Company List</h4>
+                        </div>
+                        
+                      
+                        <div class="panel-body table-responsive">
+                            <div class="row">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    @Html.NoEncodeActionLink("<span class='fa fa-plus'></span>Add Company", "Add Company", "Create", "Company", routeValues: new { id = 0 }, htmlAttributes: new { data_modal = "", @class = "btn btn-danger btn-md btn-block" })
+                                </div>
+                                <hr />
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <table id="table-task" class="table table-oddEven-rows table-hover table-striped table-fixed-row-heights dt-responsive " cellspacing="0" width="100%">
+                                        <thead>
+                                         
+                                            <tr>
+
+                                                <th id="No" class="col-xs-1">#</th>
+                                                <th class="col-md-2">Company Name</th>
+                                                <th class="col-md-3">Company Description</th>
+                                                <th class="col-md-3">Address</th>
+                                                <th class="col-md-1">Telephone No</th>
+                                                <th class="col-xs-1"></th>
+                                                <th class="hidden">ID</th>
+
+
+                                            </tr>
+
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th id="No" class="col-xs-1">#</th>
+                                                <th class="col-md-2">Company Name</th>
+                                                <th class="col-md-3">Company Description</th>
+                                                <th class="col-md-3">Address</th>
+                                                <th class="col-md-1">Telephone No</th>
+                                                <th class="col-xs-1"></th>
+                                                <th class="hidden">ID</th>
+
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
+                                            @if (listRecords !=null)
+                                            { 
+                                             int No = 0; int Jum =listRecords.Count().ToString().Length;
+
+                                            foreach (var item in listRecords)
+                                            {
+                                                No++;
+                                            <tr>
+
+
+                                                <td>@No.ToString("D"+@Jum)</td>
+                                                <td>@item.CompanyName</td>
+                                                <td>@item.CompanyDescription</td>
+                                                <td>@(item.CompanyAddress + " " + item.CompanyCity ) </td>
+                                                <td>@item.CompanyTelephoneNo</td>
+                                                
+                                                <td class="col-md-2">
+                                                    @Html.NoEncodeActionLink("<span class='fa fa-eye'></span>", "Details", "Detail", "Company", routeValues: new { id = item.CompanyId }, htmlAttributes: new { data_modal = "", @class = "btn btn-default" })
+                                                    &nbsp;
+                                                    @if (!@item.IsActive)
+                                                        {
+                                                    <button class="btn btn-default" disabled><span class='fa fa-pencil'></span></button>
+
+                                                        }
+                                                        else
+                                                        {
+                                                    @Html.NoEncodeActionLink("<span class='fa fa-pencil'></span>", "Edit", "Edit", "Company", routeValues: new { id = item.CompanyId }, htmlAttributes: new { data_modal = "", @class = "btn btn-default " })
+
+                                                        }
+                                                    &nbsp;
+                                                    @Html.NoEncodeActionLink("<span class='fa fa-times'></span>", "Delete", "Delete", "Company", routeValues: new { id = item.CompanyId }, htmlAttributes: new { data_modal = "", @class = "btn btn-default " })
+
+                                                </td>
+                                                <td class="hidden">@item.CompanyId</td>
+
+
+                                            </tr>
+                                            }
+                                            }
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </section>
+                    <!--Record List End-->
+                </div>
+                <div class="row">
+                    <section class="panel">
+                        <div class="panel-heading">
+                            <h4 class="text-center">Filter</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <section class="panel">
+                                    <div class="panel-body table-responsive">
+                                        <div class="row">
+                                            <div class="col-xs-1"></div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="control-label"> Filter Records:</label>
+                                                    <hr />
+                                                </div>
+                                                <div class="row">
+                                                    <div class="row">
+                                                        <div class="col-lg-5">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Company Name</label>
+                                                               
+                                                                    <input type="text" class="form-control" placeholder="Eeployee Name..." id="company-name">
+                                                              
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-5 ">
+                                                            <div class="form-group">
+                                                                <label class="control-label">Company Address</label>
+                                                                 <input type="text" class="form-control" placeholder="Company Address..." id="company-address">
+                                                                
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-1"></div>
+                                            <div class="col-lg-4">
+                                                <div class="row">
+                                                    <label class="control-label">Company Status:</label>
+                                                    <hr />
+                                                </div>
+                                                <div class="row">
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </section>
+                                <!--Latest Task End-->
+                            </div>
+                        </div>
+                    </section>
+                </div>
+           
+
+
+        </div><!-- ./wrapper -->
+        <!-- modal placeholder-->
+        <div id='myModal' class='modal fade in'>
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div id='myModalContent'></div>
+                </div>
+            </div>
+        </div>
+
+       <script type="text/javascript">
+            $(document).ready(function () {
+                $("btn-view").click(function () {
+                    var id = this.id.split("_")[0];
+                    location.href = '@Url.Action("Detail", new RouteValueDictionary() { { "Controller", "Company" } } )?id=' + id;
+                });
+                $("btn-edit").click(function () {
+                    var id = this.id.split("_")[0];
+                    location.href = '@Url.Action("Edit", new RouteValueDictionary() { { "Controller", "Company" } })?id=' + id;
+                });
+            });
+        </script>
+
+        <!-- Director for demo purposes -->
+        <script type="text/javascript">
+            $('input').on('ifChecked', function (event) {
+                // var element = $(this).parent().find('input:checkbox:first');
+                // element.parent().parent().parent().addClass('highlight');
+                $(this).parents('li').addClass("task-done");
+                console.log('ok');
+            });
+            $('input').on('ifUnchecked', function (event) {
+                // var element = $(this).parent().find('input:checkbox:first');
+                // element.parent().parent().parent().removeClass('highlight');
+                $(this).parents('li').removeClass("task-done");
+                console.log('not');
+            });
+
+        </script>
+        <script>
+            $('#noti-box').slimScroll({
+                height: '400px',
+                size: '5px',
+                BorderRadius: '5px'
+            });
+
+            $('input[type="checkbox"].flat-grey, input[type="radio"].flat-grey').iCheck({
+                checkboxClass: 'icheckbox_flat-grey',
+                radioClass: 'iradio_flat-grey'
+            });
+        </script>
+        
+    </body>
+
+

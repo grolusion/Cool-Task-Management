@@ -1,0 +1,193 @@
+﻿@model CoolTaskManagement.Models.TaskViewModel
+
+@{
+    ViewBag.Title = " Dashboard";
+    Layout = "~/Views/Shared/_TaskLayout.cshtml";
+}
+
+@{
+    CoolTaskManagement.Models.UserLoginModel User = ViewBag.Users as CoolTaskManagement.Models.UserLoginModel;
+    List<CoolTaskManagement.Models.TaskSeriesModel> graphTask = (List<CoolTaskManagement.Models.TaskSeriesModel>)ViewBag.Graph;
+        }
+
+  <script src="http://canvasjs.com/assets/script/canvasjs.min.js"></script>    
+
+@*
+ <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/excanvas.js" type="text/javascript"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        LoadChart();
+      
+    });
+    function LoadChart() {
+         $.ajax({
+            type: "POST",
+            url:"@Url.Action("GetLineChart", "Task", new { area = "" })",
+            data: JSON.stringify(dataobject),
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (r) {
+                var labels = r.success[0];
+                var series1 = r.success[1];
+                var series2 = r.success[2];
+                var series3 = r.success[3];
+                var series4 = r.success[4];
+                var data = {
+                    labels: r.success[0],
+                    datasets: [
+                        {
+                            label: "Reguler",
+                            fillColor: "rgba(255, 255, 193,0.2)",
+                            strokeColor: "#FCD209",
+                            pointColor: "#FF8C00",
+                            data: series1
+                        },
+                        {
+                            label: "Tambahan",
+                            fillColor: "rgba(217, 237, 247,0.2)",
+                            strokeColor: "#BCE8F1",
+                            pointColor: "#0090CB",
+                            data: series2
+                        },
+                         {
+                             label: "Khusus",
+                             fillColor: "rgba(255, 255, 193,0.2)",
+                             strokeColor: "#FCD209",
+                             pointColor: "#FF8C00",
+                             data: series3
+                         },
+                        {
+                            label: "Lainnya",
+                            fillColor: "rgba(217, 237, 247,0.2)",
+                            strokeColor: "#BCE8F1",
+                            pointColor: "#0090CB",
+                            data: series4
+                        }
+
+
+                    ]
+                };
+                $("#linechart").html("");
+                var canvas = document.createElement('canvas');
+                $("#linechart")[0].appendChild(canvas);
+
+                //Fix for IE 8
+                if ($.browser.msie && $.browser.version == "8.0") {
+                    G_vmlCanvasManager.initElement(canvas);
+                }
+                var ctx = canvas.getContext('2d');
+                ctx.canvas.height = 300;
+                ctx.canvas.width = 500;
+                var lineChart = new Chart(ctx).Line(data, {
+                    bezierCurve: false
+                });
+            },
+            failure: function (response) {
+                alert('Therewas an error.');
+            }
+        });
+    }
+</script>
+    *@  
+        <body class="skin-black">
+
+            <div class="wrapper row-offcanvas row-offcanvas-left">
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row" style="margin-bottom:5px;">
+                        <div class="col-md-3">
+                            <div class="sm-st clearfix">
+                                <span class="sm-st-icon st-red"><i class="fa fa-check-square-o"></i></span>
+                                <div class="sm-st-info">
+                                    <span>@graphTask.Where(a=>a.StatusName=="Reguler").Sum(a => a.Nilai)</span>
+                                    Regular
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="sm-st clearfix">
+                                <span class="sm-st-icon st-violet"><i class="fa fa-plus-circle"></i></span>
+                                <div class="sm-st-info">
+                                    <span>@graphTask.Where(a => a.StatusName=="Tambahan").Sum(a => a.Nilai)</span>
+                                    Additional
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="sm-st clearfix">
+                                <span class="sm-st-icon st-blue"><i class="fa fa-star-half-o"></i></span>
+                                <div class="sm-st-info">
+                                    <span>@graphTask.Where(a => a.StatusName=="Khusus").Sum(a => a.Nilai)</span>
+                                    Exlusive
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="sm-st clearfix">
+                                <span class="sm-st-icon st-green"><i class="fa fa-cubes"></i></span>
+                                <div class="sm-st-info">
+                                    <span>@graphTask.Sum(a => a.Nilai)</span>
+                                    Credit Total
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!--earning graph start-->
+                        <section class="panel">
+                            <header class="panel-heading">
+                                Activity ​​Chart
+                            </header>
+                            <div class="panel-body">
+                                <canvas id="chartContainer" width="600" height="330"></canvas>
+                                <script type="text/javascript">
+                                        var result = @Html.Raw(ViewBag.DataPoints);
+                                        var dataPoints =[];
+                                        for(var i = 0; i < result.length; i++){
+                                            dataPoints.push({label:result[i].x, y:result[i].y});
+                                        }
+
+                                        $(function () {
+                                            debugger;
+                                            var chart = new CanvasJS.Chart("chartContainer", {
+                                                theme: "theme2",
+                                                zoomEnabled: true,
+                                                animationEnabled: true,
+                                                title: {
+                                                    text: "Activity ​​Chart - Monthly"
+                                                },
+                                                data: [
+			                                    {
+			                                        type: "line",
+
+			                                        dataPoints: dataPoints,
+			                                    }
+                                                ]
+                                            });
+                                            chart.render();
+                                        });
+                                </script>
+
+                            </div>
+                        </section>
+                        <!--earning graph end-->
+                        <!--Latest Task Start-->
+                    </div>
+
+
+                </section><!-- /.content -->
+
+
+
+            </div><!-- ./wrapper -->
+            
+
+           
+
+
+
+        </body>
+
+
